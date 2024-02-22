@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "882562508001",
+    "project_id": "socialmediadashboard-ee2b6",
+    "storage_bucket": "socialmediadashboard-ee2b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882562508001:android:4edc9ace7eedca425303a0",
+        "android_client_info": {
+          "package_name": "com.example.social_media_dashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS6m5Fibd17wAe-R3O4OSuz88YHLw2Wx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
