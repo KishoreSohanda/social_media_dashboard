@@ -12,7 +12,12 @@
           "package_name": "com.example.social_media_dashboard"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "882562508001-eaeb0qgjqul9ipv1ialb6k1flqgh1oh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAS6m5Fibd17wAe-R3O4OSuz88YHLw2Wx4"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882562508001-eaeb0qgjqul9ipv1ialb6k1flqgh1oh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "882562508001-m5lfolbtc15nm6plkqks5tuo1o1l2hrm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.socialMediaDashboard"
+              }
+            }
+          ]
         }
       }
     }
