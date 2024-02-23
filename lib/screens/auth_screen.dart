@@ -4,8 +4,7 @@ import '../widgets/login_form.dart';
 import '../widgets/signup_form.dart';
 
 class AuthScreen extends StatefulWidget {
-  // static const routeName = '/auth-screen';
-  static const routeName = '/';
+  static const routeName = '/auth-screen';
   const AuthScreen({super.key});
 
   @override

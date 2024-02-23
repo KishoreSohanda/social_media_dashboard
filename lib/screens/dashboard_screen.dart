@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/dashboard_drawer.dart';
+
 class DashboardScreen extends StatelessWidget {
   static const routeName = '/dashboard-screen';
   const DashboardScreen({super.key});
@@ -13,6 +15,7 @@ class DashboardScreen extends StatelessWidget {
         ],
         title: const Text('Dashboard'),
       ),
+      drawer: const DashboardDrawer(),
     );
   }
 }

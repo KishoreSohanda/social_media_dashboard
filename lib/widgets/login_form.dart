@@ -1,7 +1,31 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _handleGoogleSignIn() async {
+    try {
+      GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
+      await _auth.signInWithProvider(googleAuthProvider);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Theme.of(context).colorScheme.error,
+          content: Text('An error occured! $error'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +102,7 @@ class LoginForm extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(4))),
                             fixedSize:
                                 const MaterialStatePropertyAll(Size(300, 20))),
-                        onPressed: () {},
+                        onPressed: _handleGoogleSignIn,
                         child: Row(
                           children: [
                             Image.network(
