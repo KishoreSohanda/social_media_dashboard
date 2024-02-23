@@ -2,9 +2,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  final void Function(String email, String password) submitFn;
+  const LoginForm(this.submitFn, {super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -12,14 +14,38 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  String? _enteredEmail;
+  String? _enteredPassword;
+
+  void _submitLoginForm() {
+    var isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      _formKey.currentState!.save();
+      widget.submitFn(_enteredEmail!.trim(), _enteredPassword!.trim());
+      // print('formSaved');
+    } else {
+      // print('form not valid');
+    }
+  }
 
   Future<void> _handleGoogleSignIn() async {
     try {
+      UserCredential authResult;
       GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
-      await _auth.signInWithProvider(googleAuthProvider);
+      authResult = await _auth.signInWithProvider(googleAuthProvider);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(authResult.user?.uid)
+          .set({
+        'username': authResult.user?.displayName,
+        'email': authResult.user?.email,
+        'image_url': authResult.user?.photoURL,
+      });
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          duration: const Duration(seconds: 2),
           backgroundColor: Theme.of(context).colorScheme.error,
           content: Text('An error occured! $error'),
         ),
@@ -34,6 +60,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Container(
@@ -55,6 +82,21 @@ class _LoginFormState extends State<LoginForm> {
                           hintText: 'Enter email address.',
                           labelText: 'Email',
                         ),
+                        validator: (value) {
+                          _enteredEmail = value;
+                          var msg = 'Enter valid email address.';
+                          if (value!.isEmpty) {
+                            return msg;
+                          }
+                          if (!(value.contains('@'))) {
+                            return msg;
+                          }
+                          if (!(value.contains('.com'))) {
+                            return msg;
+                          }
+                          return null;
+                        },
+                        onSaved: (newValue) => _enteredEmail = newValue,
                         keyboardType: TextInputType.emailAddress,
                       ),
                       TextFormField(
@@ -70,6 +112,19 @@ class _LoginFormState extends State<LoginForm> {
                           hintText: 'Enter Password.',
                           labelText: 'Password',
                         ),
+                        validator: (value) {
+                          _enteredPassword = value;
+                          var msg =
+                              'Password should be atleast 7 characters long.';
+                          if (value!.length < 7) {
+                            return msg;
+                          }
+                          if (value.isEmpty) {
+                            return msg;
+                          }
+                          return null;
+                        },
+                        onSaved: (newValue) => _enteredPassword = newValue,
                       )
                     ],
                   ),
@@ -84,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                                     borderRadius: BorderRadius.circular(4))),
                             fixedSize:
                                 const MaterialStatePropertyAll(Size(300, 20))),
-                        onPressed: () {},
+                        onPressed: _submitLoginForm,
                         icon: const Icon(Icons.done),
                         label: const Text(
                           'Log In',
