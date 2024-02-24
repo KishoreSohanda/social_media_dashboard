@@ -8,21 +8,21 @@ class ConnectionInfo with ChangeNotifier {
   InternetConnectivity? internet;
 
   Future<bool> internetConnectivity() async {
+    bool connectivity = true;
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         // print('connected');
         internet = InternetConnectivity.connected;
-        notifyListeners();
-        return true;
+        connectivity = true;
       }
     } on SocketException catch (_) {
       // print('not connected');
       internet = InternetConnectivity.disconnected;
-      notifyListeners();
-      return false;
+      connectivity = false;
     }
-    return true;
+    notifyListeners();
+    return connectivity;
   }
 
   SnackBar? errorSnackbar(BuildContext ctx) {

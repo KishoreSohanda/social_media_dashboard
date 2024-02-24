@@ -68,8 +68,23 @@ class _AuthScreenState extends State<AuthScreen> {
         'email': email,
         'image_url': userImageUrl,
       });
-    } catch (e) {
-      // print(e);
+    } catch (error) {
+      if (error.toString().contains(
+          'The email address is already in use by another account.')) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            backgroundColor: Theme.of(context).colorScheme.error,
+            content: Text(
+              'Email is already taken by a user.',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
+      }
     }
   }
 
