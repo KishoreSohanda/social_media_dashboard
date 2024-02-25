@@ -100,6 +100,7 @@ class _LoginFormState extends State<LoginForm> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       TextFormField(
+                        obscureText: true,
                         cursorColor: Theme.of(context).colorScheme.secondary,
                         style: const TextStyle(
                           color: Color.fromRGBO(64, 171, 251, 1),

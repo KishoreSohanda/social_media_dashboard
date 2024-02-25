@@ -21,8 +21,8 @@ class _SignupFormState extends State<SignupForm> {
 
   Future<void> _pickProfileImage() async {
     final imagePickerInstance = ImagePicker();
-    final pickedImage =
-        await imagePickerInstance.pickImage(source: ImageSource.camera);
+    final pickedImage = await imagePickerInstance.pickImage(
+        source: ImageSource.camera, imageQuality: 50, maxWidth: 150);
     setState(() {
       _pickedImage = File(pickedImage!.path);
     });
@@ -120,6 +120,7 @@ class _SignupFormState extends State<SignupForm> {
                         onSaved: (newValue) => _enteredEmail = newValue,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.name,
                         cursorColor: Theme.of(context).colorScheme.secondary,
                         style: const TextStyle(
                           color: Color.fromRGBO(64, 171, 251, 1),
@@ -147,6 +148,7 @@ class _SignupFormState extends State<SignupForm> {
                         onSaved: (newValue) => _enteredUsername = newValue,
                       ),
                       TextFormField(
+                        obscureText: true,
                         cursorColor: Theme.of(context).colorScheme.secondary,
                         style: const TextStyle(
                           color: Color.fromRGBO(64, 171, 251, 1),
@@ -174,6 +176,7 @@ class _SignupFormState extends State<SignupForm> {
                         onSaved: (newValue) => _enteredPassword = newValue,
                       ),
                       TextFormField(
+                        obscureText: true,
                         cursorColor: Theme.of(context).colorScheme.secondary,
                         style: const TextStyle(
                           color: Color.fromRGBO(64, 171, 251, 1),
