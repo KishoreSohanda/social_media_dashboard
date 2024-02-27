@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../screens/dashboard_screen.dart';
+import '../screens/accounts_screen.dart';
+import '../screens/charts_screen.dart';
 import '../providers/connection_info.dart';
 
 class DashboardDrawer extends StatefulWidget {
@@ -231,6 +234,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
         child: Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: FutureBuilder(
             future: firestoreDatabase.collection('users').doc(userId).get(),
@@ -288,9 +292,62 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               ),
             )
           : ListView(
-              reverse: true,
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.only(top: 80),
               children: [
+                const Divider(
+                  thickness: 0.3,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.dashboard_outlined,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  title: Text(
+                    'Dashboard',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(DashboardScreen.routeName);
+                  },
+                ),
+                const Divider(
+                  thickness: 0.3,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.account_box_rounded,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  title: Text(
+                    'Accounts',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AccountsScreen.routeName);
+                  },
+                ),
+                const Divider(
+                  thickness: 0.3,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.addchart,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  title: Text(
+                    'Charts',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(ChartsScreen.routeName);
+                  },
+                ),
                 const Divider(
                   thickness: 0.3,
                 ),
@@ -305,7 +362,8 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                         color: Theme.of(context).colorScheme.secondary),
                   ),
                   onTap: () {
-                    auth.signOut();
+                    auth.signOut().then((value) => Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/', (route) => false));
                   },
                 ),
                 const Divider(thickness: 0.3),

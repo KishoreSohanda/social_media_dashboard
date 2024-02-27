@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import './providers/connection_info.dart';
 import './screens/splash_loading_screen.dart';
 
+import './screens/charts_screen.dart';
+import './screens/accounts_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/dashboard_screen.dart';
 
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
             ),
         AuthScreen.routeName: (ctx) => const AuthScreen(),
         DashboardScreen.routeName: (ctx) => const DashboardScreen(),
+        AccountsScreen.routeName: (ctx) => const AccountsScreen(),
+        ChartsScreen.routeName: (ctx) => const ChartsScreen(),
       },
     );
   }
